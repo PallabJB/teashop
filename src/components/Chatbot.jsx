@@ -35,10 +35,15 @@ const Chatbot = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: [...messages, userMsg] })
             });
+
+            if (!response.ok) {
+                throw new Error('API Error');
+            }
+
             const data = await response.json();
             setMessages(prev => [...prev, data]);
         } catch (error) {
-            setMessages(prev => [...prev, { role: 'model', content: "Pardon me, my senses seem momentarily clouded. Please try again shortly." }]);
+            setMessages(prev => [...prev, { role: 'model', content: "Pardon me, I am momentarily unable to connect to my tea knowledge base. Please check back shortly." }]);
         } finally {
             setIsLoading(false);
         }
