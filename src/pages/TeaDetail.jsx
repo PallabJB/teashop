@@ -14,8 +14,7 @@ const TeaDetail = () => {
     useEffect(() => {
         const fetchTea = async () => {
             try {
-                const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-                const res = await axios.get(`${API_URL}/api/teas/${id}`);
+                const res = await axios.get(`/api/teas/${id}`);
                 setTea(res.data);
             } catch (err) {
                 console.error(err);
