@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Menu, X, Leaf } from 'lucide-react';
+import { ShoppingBag, Menu, X, Coffee } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 
@@ -38,7 +38,7 @@ const Navbar = () => {
         >
             <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
                 <Link to="/" className="flex items-center gap-2 group">
-                    <Leaf strokeWidth={1.5} className="w-6 h-6 transform group-hover:-rotate-12 transition-transform duration-300" />
+                    <Coffee strokeWidth={1.5} className="w-6 h-6 transform group-hover:-rotate-12 transition-transform duration-300" />
                     <span className="font-heading text-2xl tracking-widest uppercase">Koto</span>
                 </Link>
 
