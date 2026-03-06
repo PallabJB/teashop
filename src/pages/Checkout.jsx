@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Plus, Minus } from 'lucide-react';
@@ -29,37 +29,9 @@ const Checkout = () => {
         }, 1500);
     };
 
-    if (isSuccess) {
-        return (
-            <div className="bg-cream min-h-[70vh] flex flex-col items-center justify-center pt-32 pb-24 text-center px-6">
-                <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, type: 'spring' }}
-                >
-                    <CheckCircle className="w-24 h-24 text-[#C2B280] mx-auto mb-6" />
-                </motion.div>
-                <motion.h1
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    className="font-heading text-4xl md:text-5xl text-forest mb-4"
-                >
-                    Order Confirmed
-                </motion.h1>
-                <motion.p
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-forest/70 max-w-md mx-auto"
-                >
-                    Thank you for your purchase. We are preparing your tea for its journey. You will be redirected shortly...
-                </motion.p>
-            </div>
-        );
-    }
 
-    if (cart.length === 0) {
+
+    if (cart.length === 0 && !isSuccess) {
         return (
             <div className="bg-cream min-h-[60vh] flex flex-col items-center justify-center pt-32 pb-24 text-center px-6">
                 <h1 className="font-heading text-4xl text-forest mb-6">Your cart is empty</h1>
@@ -100,7 +72,7 @@ const Checkout = () => {
                                     </div>
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Phone Number *</label>
-                                        <input required type="tel" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="tel" pattern="[0-9]{10}" maxLength="10" title="Please enter a valid 10-digit phone number" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
                                     </div>
                                 </div>
                             </section>
@@ -127,7 +99,7 @@ const Checkout = () => {
                                     </div>
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Postal Code *</label>
-                                        <input required type="text" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="text" pattern="[0-9]{6}" maxLength="6" title="Please enter a valid 6-digit postal code" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
                                     </div>
                                 </div>
                             </section>
@@ -154,16 +126,16 @@ const Checkout = () => {
                                         <div className="p-4 border border-t-0 border-forest/20 bg-white/30 space-y-4">
                                             <div className="flex flex-col">
                                                 <label className="text-[10px] uppercase tracking-widest text-forest/70 mb-1">Card Number *</label>
-                                                <input required type="text" placeholder="0000 0000 0000 0000" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
+                                                <input required type="text" pattern="[0-9]{16}" maxLength="16" title="Please enter a valid 16-digit card number without spaces" placeholder="0000111122223333" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
                                             </div>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="flex flex-col">
                                                     <label className="text-[10px] uppercase tracking-widest text-forest/70 mb-1">Expiration Date (MM/YY) *</label>
-                                                    <input required type="text" placeholder="MM/YY" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
+                                                    <input required type="text" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" maxLength="5" title="Please enter a valid date in MM/YY format" placeholder="MM/YY" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <label className="text-[10px] uppercase tracking-widest text-forest/70 mb-1">CVC *</label>
-                                                    <input required type="text" placeholder="123" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
+                                                    <input required type="text" pattern="[0-9]{3,4}" maxLength="4" title="Please enter a 3 or 4 digit CVC" placeholder="123" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
                                                 </div>
                                             </div>
                                         </div>
@@ -250,6 +222,43 @@ const Checkout = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Success Popup Modal */}
+            <AnimatePresence>
+                {isSuccess && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-dark/60 backdrop-blur-sm"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.8, opacity: 0, rotateX: 45 }}
+                            animate={{ scale: 1, opacity: 1, rotateX: 0 }}
+                            exit={{ scale: 0.8, opacity: 0, rotateX: 45 }}
+                            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                            className="bg-cream p-10 max-w-md w-full text-center border border-[#C2B280]/30 shadow-2xl relative overflow-hidden"
+                            style={{ transformPerspective: 1000 }}
+                        >
+                            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#C2B280]/20 rounded-full blur-2xl"></div>
+
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.2, type: "spring" }}
+                                className="w-20 h-20 mx-auto bg-green-500/10 rounded-full flex items-center justify-center mb-6"
+                            >
+                                <CheckCircle className="w-10 h-10 text-green-600" />
+                            </motion.div>
+
+                            <h3 className="font-heading text-3xl text-forest mb-4">Order Placed!</h3>
+                            <p className="text-forest/70 font-light leading-relaxed mb-8">
+                                Thank you for your purchase. Your tea is being prepared for its journey. You will be redirected shortly...
+                            </p>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
