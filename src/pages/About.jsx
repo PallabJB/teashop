@@ -70,7 +70,7 @@ const About = () => {
                         </p>
                     </motion.div>
 
-                    <div className="order-1 md:order-2 aspect-[4/3] overflow-hidden bg-[#C2B280]">
+                    <div className="order-1 md:order-2 aspect-[4/3] overflow-hidden bg-[#87CEEB]">
                         <img
                             src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80"
                             alt="Tea craftsmanship"

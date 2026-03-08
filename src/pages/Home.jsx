@@ -195,7 +195,7 @@ const Home = () => {
 
                                         <p className="text-[13px] tracking-[0.15em] text-forest/80 mb-6 font-sans mt-auto">{tea.price}</p>
 
-                                        <button onClick={() => addToCart(tea)} className="cursor-pointer w-full py-3 bg-[#C2B280] text-dark hover:bg-[#A8986B] transition-colors text-xs uppercase tracking-[0.2em] font-medium border border-transparent hover:border-dark/10">
+                                        <button onClick={() => addToCart(tea)} className="cursor-pointer w-full py-3 bg-[#87CEEB] text-dark hover:bg-[#4682B4] transition-colors text-xs uppercase tracking-[0.2em] font-medium border border-transparent hover:border-dark/10">
                                             Add To Cart
                                         </button>
                                     </div>
@@ -262,7 +262,7 @@ const Home = () => {
 
                                         <p className="text-[13px] tracking-[0.15em] text-forest/80 mb-6 font-sans mt-auto">{tea.price}</p>
 
-                                        <button onClick={() => addToCart(tea)} className="cursor-pointer w-full py-3 bg-[#C2B280] text-dark hover:bg-[#A8986B] transition-colors text-xs uppercase tracking-[0.2em] font-medium border border-transparent hover:border-dark/10">
+                                        <button onClick={() => addToCart(tea)} className="cursor-pointer w-full py-3 bg-[#87CEEB] text-dark hover:bg-[#4682B4] transition-colors text-xs uppercase tracking-[0.2em] font-medium border border-transparent hover:border-dark/10">
                                             Add To Cart
                                         </button>
                                     </div>

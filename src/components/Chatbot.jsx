@@ -105,7 +105,7 @@ const Chatbot = () => {
                 animate={{ scale: 1 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="cursor-pointer fixed bottom-6 right-6 z-50 p-4 bg-[#C2B280] text-dark rounded-full shadow-2xl border border-dark/10 hover:bg-[#A8986B] transition-colors"
+                className="cursor-pointer fixed bottom-6 right-6 z-50 p-4 bg-[#87CEEB] text-dark rounded-full shadow-2xl border border-dark/10 hover:bg-[#4682B4] transition-colors"
                 onClick={() => setIsOpen(true)}
             >
                 <MessageSquare strokeWidth={1.5} className="w-6 h-6" />

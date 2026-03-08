@@ -11,6 +11,28 @@ const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState('card');
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [expiryDate, setExpiryDate] = useState('');
+    const [cvc, setCvc] = useState('');
+
+    const handleExpiryChange = (e) => {
+        let inputVal = e.target.value;
+        if (inputVal.length === expiryDate.length - 1 && expiryDate.endsWith('/')) {
+            inputVal = inputVal.slice(0, -1);
+        }
+        let digits = inputVal.replace(/\D/g, '').slice(0, 4);
+
+        if (digits.length > 2) {
+            setExpiryDate(`${digits.slice(0, 2)}/${digits.slice(2)}`);
+        } else if (digits.length === 2 && inputVal.length > expiryDate.length) {
+            setExpiryDate(`${digits}/`);
+        } else {
+            setExpiryDate(digits);
+        }
+    };
+
+    const handleCvcChange = (e) => {
+        setCvc(e.target.value.replace(/\D/g, '').slice(0, 4));
+    };
 
     const handlePlaceOrder = (e) => {
         e.preventDefault();
@@ -38,7 +60,7 @@ const Checkout = () => {
                 <p className="text-forest/70 mb-8">It seems you haven't selected any teas yet.</p>
                 <button
                     onClick={() => navigate('/collection')}
-                    className="cursor-pointer bg-[#C2B280] text-dark px-10 py-3 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#A8986B] transition-colors"
+                    className="cursor-pointer bg-[#87CEEB] text-dark px-10 py-3 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#4682B4] transition-colors"
                 >
                     Explore Collection
                 </button>
@@ -68,11 +90,11 @@ const Checkout = () => {
                                 <div className="space-y-6">
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Email Address *</label>
-                                        <input required type="email" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="email" onInput={(e) => e.target.value = e.target.value.toLowerCase()} pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address (e.g. user@domain.com)" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="your@email.com" />
                                     </div>
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Phone Number *</label>
-                                        <input required type="tel" pattern="[0-9]{10}" maxLength="10" title="Please enter a valid 10-digit phone number" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="tel" pattern="[0-9]{10}" maxLength="10" title="Please enter exactly 10 digits without spaces or dashes" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="1234567890" />
                                     </div>
                                 </div>
                             </section>
@@ -83,23 +105,23 @@ const Checkout = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">First Name *</label>
-                                        <input required type="text" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="text" pattern="[A-Za-z\s\-]{2,50}" title="Must be at least 2 characters and contain only letters" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="Jane" />
                                     </div>
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Last Name *</label>
-                                        <input required type="text" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="text" pattern="[A-Za-z\s\-]{2,50}" title="Must be at least 2 characters and contain only letters" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="Doe" />
                                     </div>
                                     <div className="flex flex-col md:col-span-2">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Street Address *</label>
-                                        <input required type="text" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="text" minLength="5" title="Please enter a full street address" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="123 Tea Garden Blvd" />
                                     </div>
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">City *</label>
-                                        <input required type="text" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="text" pattern="[A-Za-z\s\-]{2,50}" title="City must contain only letters" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="Assam" />
                                     </div>
                                     <div className="flex flex-col">
                                         <label className="text-xs uppercase tracking-widest text-forest/70 mb-2">Postal Code *</label>
-                                        <input required type="text" pattern="[0-9]{6}" maxLength="6" title="Please enter a valid 6-digit postal code" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#C2B280] transition-colors text-forest" />
+                                        <input required type="text" pattern="[0-9]{6}" maxLength="6" title="Please enter exactly 6 digits" className="bg-transparent border border-forest/20 p-3 outline-none focus:border-[#87CEEB] transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="123456" />
                                     </div>
                                 </div>
                             </section>
@@ -108,7 +130,7 @@ const Checkout = () => {
                             <section>
                                 <h2 className="font-heading text-2xl text-forest mb-6 pb-2 border-b border-forest/10">Payment Method</h2>
                                 <div className="space-y-4">
-                                    <label className={`block border p-4 cursor-pointer transition-colors ${paymentMethod === 'card' ? 'border-[#C2B280] bg-[#C2B280]/5' : 'border-forest/20 bg-transparent'}`}>
+                                    <label className={`block border p-4 cursor-pointer transition-colors ${paymentMethod === 'card' ? 'border-[#87CEEB] bg-[#87CEEB]/5' : 'border-forest/20 bg-transparent'}`}>
                                         <div className="flex items-center gap-3">
                                             <input
                                                 type="radio"
@@ -116,7 +138,7 @@ const Checkout = () => {
                                                 value="card"
                                                 checked={paymentMethod === 'card'}
                                                 onChange={() => setPaymentMethod('card')}
-                                                className="accent-[#C2B280]"
+                                                className="accent-[#87CEEB]"
                                             />
                                             <span className="font-medium text-forest">Credit Card</span>
                                         </div>
@@ -126,22 +148,22 @@ const Checkout = () => {
                                         <div className="p-4 border border-t-0 border-forest/20 bg-white/30 space-y-4">
                                             <div className="flex flex-col">
                                                 <label className="text-[10px] uppercase tracking-widest text-forest/70 mb-1">Card Number *</label>
-                                                <input required type="text" pattern="[0-9]{16}" maxLength="16" title="Please enter a valid 16-digit card number without spaces" placeholder="0000111122223333" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
+                                                <input required type="text" pattern="[0-9]{16}" maxLength="16" title="Please enter exactly 16 digits without spaces" placeholder="0000111122223333" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#87CEEB] text-sm text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" />
                                             </div>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="flex flex-col">
                                                     <label className="text-[10px] uppercase tracking-widest text-forest/70 mb-1">Expiration Date (MM/YY) *</label>
-                                                    <input required type="text" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" maxLength="5" title="Please enter a valid date in MM/YY format" placeholder="MM/YY" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
+                                                    <input required type="text" value={expiryDate} onChange={handleExpiryChange} pattern="(0[1-9]|1[0-2])\/[0-9]{2}" maxLength="5" title="Please enter a valid date in MM/YY format" placeholder="MM/YY" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#87CEEB] text-sm text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" />
                                                 </div>
                                                 <div className="flex flex-col">
                                                     <label className="text-[10px] uppercase tracking-widest text-forest/70 mb-1">CVC *</label>
-                                                    <input required type="text" pattern="[0-9]{3,4}" maxLength="4" title="Please enter a 3 or 4 digit CVC" placeholder="123" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#C2B280] text-sm text-forest" />
+                                                    <input required type="text" value={cvc} onChange={handleCvcChange} pattern="[0-9]{3,4}" maxLength="4" title="Please enter exactly 3 or 4 digits" placeholder="123" className="bg-white border border-forest/10 p-2 outline-none focus:border-[#87CEEB] text-sm text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" />
                                                 </div>
                                             </div>
                                         </div>
                                     )}
 
-                                    <label className={`block border p-4 cursor-pointer transition-colors ${paymentMethod === 'cod' ? 'border-[#C2B280] bg-[#C2B280]/5' : 'border-forest/20 bg-transparent'}`}>
+                                    <label className={`block border p-4 cursor-pointer transition-colors ${paymentMethod === 'cod' ? 'border-[#87CEEB] bg-[#87CEEB]/5' : 'border-forest/20 bg-transparent'}`}>
                                         <div className="flex items-center gap-3">
                                             <input
                                                 type="radio"
@@ -149,7 +171,7 @@ const Checkout = () => {
                                                 value="cod"
                                                 checked={paymentMethod === 'cod'}
                                                 onChange={() => setPaymentMethod('cod')}
-                                                className="accent-[#C2B280]"
+                                                className="accent-[#87CEEB]"
                                             />
                                             <span className="font-medium text-forest">Cash on Delivery</span>
                                         </div>
@@ -160,7 +182,7 @@ const Checkout = () => {
                             <button
                                 type="submit"
                                 disabled={isProcessing}
-                                className="cursor-pointer w-full bg-[#C2B280] text-dark py-4 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#A8986B] transition-colors mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="cursor-pointer w-full bg-[#87CEEB] text-dark py-4 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#4682B4] transition-colors mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isProcessing ? "Processing..." : "Place Order"}
                             </button>
@@ -237,10 +259,10 @@ const Checkout = () => {
                             animate={{ scale: 1, opacity: 1, rotateX: 0 }}
                             exit={{ scale: 0.8, opacity: 0, rotateX: 45 }}
                             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                            className="bg-cream p-10 max-w-md w-full text-center border border-[#C2B280]/30 shadow-2xl relative overflow-hidden"
+                            className="bg-cream p-10 max-w-md w-full text-center border border-[#87CEEB]/30 shadow-2xl relative overflow-hidden"
                             style={{ transformPerspective: 1000 }}
                         >
-                            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#C2B280]/20 rounded-full blur-2xl"></div>
+                            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#87CEEB]/20 rounded-full blur-2xl"></div>
 
                             <motion.div
                                 initial={{ scale: 0 }}

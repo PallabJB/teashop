@@ -49,7 +49,7 @@ const TeaDetail = () => {
 
                         <div className="flex items-center gap-6 mb-12">
                             <span className="font-heading text-3xl text-forest">RS. {tea.price}</span>
-                            <button onClick={() => addToCart(tea)} className="cursor-pointer bg-[#C2B280] text-dark px-12 py-4 uppercase tracking-[0.2em] font-medium text-sm hover:bg-[#A8986B] transition-colors border border-transparent hover:border-dark/10">
+                            <button onClick={() => addToCart(tea)} className="cursor-pointer bg-[#87CEEB] text-dark px-12 py-4 uppercase tracking-[0.2em] font-medium text-sm hover:bg-[#4682B4] transition-colors border border-transparent hover:border-dark/10">
                                 Add to Cart
                             </button>
                         </div>

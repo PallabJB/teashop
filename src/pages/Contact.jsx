@@ -13,7 +13,8 @@ const Contact = () => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: name === 'email' ? value.toLowerCase() : value });
     };
 
     const handleSubmit = async (e) => {
@@ -61,25 +62,25 @@ const Contact = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div className="flex flex-col">
                                     <label className="text-xs uppercase tracking-widest text-forest mb-2">First Name</label>
-                                    <input required type="text" name="firstName" value={formData.firstName} onChange={handleChange} className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest" />
+                                    <input required type="text" name="firstName" value={formData.firstName} onChange={handleChange} pattern="[A-Za-z\s\-]{2,50}" title="Must be at least 2 characters and contain only letters" className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="Jane" />
                                 </div>
                                 <div className="flex flex-col">
                                     <label className="text-xs uppercase tracking-widest text-forest mb-2">Last Name</label>
-                                    <input required type="text" name="lastName" value={formData.lastName} onChange={handleChange} className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest" />
+                                    <input required type="text" name="lastName" value={formData.lastName} onChange={handleChange} pattern="[A-Za-z\s\-]{2,50}" title="Must be at least 2 characters and contain only letters" className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="Doe" />
                                 </div>
                             </div>
 
                             <div className="flex flex-col">
                                 <label className="text-xs uppercase tracking-widest text-forest mb-2">Email Address</label>
-                                <input required type="email" name="email" value={formData.email} onChange={handleChange} className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest" />
+                                <input required type="email" name="email" value={formData.email} onChange={handleChange} pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address" className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="your@email.com" />
                             </div>
 
                             <div className="flex flex-col">
                                 <label className="text-xs uppercase tracking-widest text-forest mb-2">Message</label>
-                                <textarea required rows="4" name="message" value={formData.message} onChange={handleChange} className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest resize-none"></textarea>
+                                <textarea required minLength="10" rows="4" name="message" value={formData.message} onChange={handleChange} title="Message must be at least 10 characters long" className="bg-transparent border-b border-forest/20 py-3 outline-none focus:border-gold transition-colors text-forest resize-none invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-red-600" placeholder="How can we help you?"></textarea>
                             </div>
 
-                            <button type="submit" disabled={isSubmitting} className="cursor-pointer bg-[#C2B280] text-dark px-12 py-4 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#A8986B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-4 border border-transparent hover:border-dark/10">
+                            <button type="submit" disabled={isSubmitting} className="cursor-pointer bg-[#87CEEB] text-dark px-12 py-4 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#4682B4] disabled:opacity-50 disabled:cursor-not-allowed transition-colors mt-4 border border-transparent hover:border-dark/10">
                                 {isSubmitting ? 'Sending...' : 'Submit'}
                             </button>
                         </form>
@@ -94,18 +95,18 @@ const Contact = () => {
                             <h2 className="font-heading text-3xl text-forest mb-8">Our Boutique</h2>
                             <ul className="space-y-6 text-forest">
                                 <li className="flex items-start gap-4">
-                                    <MapPin className="w-5 h-5 text-[#C2B280] mt-1" />
+                                    <MapPin className="w-5 h-5 text-[#87CEEB] mt-1" />
                                     <div>
                                         <h4 className="uppercase tracking-widest text-sm font-semibold mb-1">Assam Estate</h4>
                                         <p className="text-forest/70 font-light">Assam<br />India</p>
                                     </div>
                                 </li>
                                 <li className="flex items-center gap-4">
-                                    <Phone className="w-5 h-5 text-[#C2B280]" />
+                                    <Phone className="w-5 h-5 text-[#87CEEB]" />
                                     <p className="text-forest/70 font-light">+91 9876-543210</p>
                                 </li>
                                 <li className="flex items-center gap-4">
-                                    <Mail className="w-5 h-5 text-[#C2B280]" />
+                                    <Mail className="w-5 h-5 text-[#87CEEB]" />
                                     <p className="text-forest/70 font-light">concierge@kototea.com</p>
                                 </li>
                             </ul>
@@ -141,11 +142,11 @@ const Contact = () => {
                             animate={{ scale: 1, opacity: 1, rotateX: 0 }}
                             exit={{ scale: 0.8, opacity: 0, rotateX: 45 }}
                             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-                            className="bg-cream p-10 max-w-md w-full text-center border border-[#C2B280]/30 shadow-2xl relative overflow-hidden"
+                            className="bg-cream p-10 max-w-md w-full text-center border border-[#87CEEB]/30 shadow-2xl relative overflow-hidden"
                             style={{ transformPerspective: 1000 }}
                         >
                             {/* Decorative background circle */}
-                            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#C2B280]/20 rounded-full blur-2xl"></div>
+                            <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#87CEEB]/20 rounded-full blur-2xl"></div>
 
                             <motion.div
                                 initial={{ scale: 0 }}
@@ -163,7 +164,7 @@ const Contact = () => {
 
                             <button
                                 onClick={() => setShowSuccessModal(false)}
-                                className="w-full bg-[#C2B280] text-dark py-4 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#A8986B] transition-colors cursor-pointer border border-transparent hover:border-dark/10"
+                                className="w-full bg-[#87CEEB] text-dark py-4 uppercase tracking-[0.2em] text-sm font-medium hover:bg-[#4682B4] transition-colors cursor-pointer border border-transparent hover:border-dark/10"
                             >
                                 Continue
                             </button>

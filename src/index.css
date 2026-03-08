@@ -4,22 +4,22 @@
   --font-heading: "Playfair Display", "Cinzel", serif;
   --font-sans: "Inter", "Lato", sans-serif;
 
-  --color-cream: #F4F7F8;
-  /* Cool Pearl */
-  --color-ivory: #E9EEF3;
-  /* Soft Blue-Grey */
-  --color-forest: #142333;
-  /* Deep Sapphire */
-  --color-forest-dark: #0A131E;
-  /* Midnight Blue */
-  --color-gold: #5E7A8E;
-  /* Steel Blue */
-  --color-gold-light: #8BA8BC;
-  /* Light Steel */
-  --color-beige: #D9E1E8;
-  /* Dusty Blue Grey */
-  --color-dark: #080D14;
-  /* Deep Slate */
+  --color-cream: #F5FAF5;
+  /* Soft Mint Cream */
+  --color-ivory: #E8F0E8;
+  /* Light Sage */
+  --color-forest: #2F4D3C;
+  /* Pine Green */
+  --color-forest-dark: #1A3023;
+  /* Deep Pine */
+  --color-gold: #739C6D;
+  /* Matcha Green */
+  --color-gold-light: #94B88E;
+  /* Light Moss */
+  --color-beige: #DEE8DF;
+  /* Dusty Moss */
+  --color-dark: #101F15;
+  /* Very Deep Green */
 
   --animate-fade-in: fadeIn 1s ease-out forwards;
   --animate-slide-up: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;

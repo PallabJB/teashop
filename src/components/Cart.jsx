@@ -46,7 +46,7 @@ const Cart = () => {
                                     <p className="font-sans uppercase tracking-widest text-sm">Your cart is empty</p>
                                     <button
                                         onClick={() => setIsCartOpen(false)}
-                                        className="cursor-pointer mt-4 px-8 py-3 bg-[#C2B280] text-dark uppercase tracking-[0.2em] text-xs font-medium hover:bg-[#A8986B] transition-colors border border-transparent hover:border-dark/10"
+                                        className="cursor-pointer mt-4 px-8 py-3 bg-[#87CEEB] text-dark uppercase tracking-[0.2em] text-xs font-medium hover:bg-[#4682B4] transition-colors border border-transparent hover:border-dark/10"
                                     >
                                         Continue Shopping
                                     </button>
@@ -91,7 +91,7 @@ const Cart = () => {
                                         setIsCartOpen(false);
                                         navigate('/checkout');
                                     }}
-                                    className="cursor-pointer w-full py-4 bg-[#C2B280] text-dark hover:bg-[#A8986B] transition-colors text-sm uppercase tracking-[0.2em] font-medium border border-transparent hover:border-dark/10 flex justify-center items-center gap-2"
+                                    className="cursor-pointer w-full py-4 bg-[#87CEEB] text-dark hover:bg-[#4682B4] transition-colors text-sm uppercase tracking-[0.2em] font-medium border border-transparent hover:border-dark/10 flex justify-center items-center gap-2"
                                 >
                                     Checkout
                                 </button>
